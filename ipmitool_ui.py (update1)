@@ -1,0 +1,67 @@
+import os 
+import tkinter as tk
+import tkinter.font as tkFont
+
+
+
+def clear():
+    result_label.configure(text="") 
+
+
+def ipmitool ():
+    os.system(f"ipmitool -I lanplus -H 10.165.{ip_entry.get()}.{ip2_entry.get()} -U admin -P admin fru print")
+    result_label.configure(text=result_label.cget('text') , wraplength=800,font=fontExample2)
+    #ip = os.popen(f"ipmitool -I lanplus -H 10.165.{ip_entry.get()} -U admin -P admin fru print").readlines()
+    #result_label.configure(text=result_label.cget('text') + str(ip) , wraplength=900,font=fontExample2)
+
+
+
+
+
+
+#Create title
+window = tk.Tk()
+window.title('FTTCL')
+window.geometry('1000x1000')
+
+#Create the Font selection
+fontExample = tkFont.Font(family="Segoe UI", size=20)
+fontExample2 = tkFont.Font(family="Segoe UI", size=10)
+fontExample3 = tkFont.Font(family="Segoe UI", size=15)
+header_label = tk.Label(window, text='T50 RAID Team',font=fontExample)
+header_label.pack()
+
+
+fontExample = tkFont.Font(family="Segoe UI", size=20)
+fontExample2 = tkFont.Font(family="Segoe UI", size=10)
+fontExample3 = tkFont.Font(family="Segoe UI", size=15)
+header_label = tk.Label(window, text='IP format is 10.165.x.y. Please input x and y ',font=fontExample2)
+header_label.pack()
+
+#Create the TXT name row
+ip_frame = tk.Frame(window)
+ip_frame.pack(side=tk.TOP)
+ip_label = tk.Label(ip_frame, text='x:',font=fontExample2,padx=5,pady=10)
+ip_label.pack(side=tk.LEFT)
+ip_entry = tk.Entry(ip_frame)
+ip_entry.pack(side=tk.LEFT)
+
+
+ip2_frame = tk.Frame(window)
+ip2_frame.pack(side=tk.TOP)
+ip2_label = tk.Label(ip_frame, text='y:',font=fontExample2,padx=5,pady=10)
+ip2_label.pack(side=tk.LEFT)
+ip2_entry = tk.Entry(ip_frame)
+ip2_entry.pack(side=tk.LEFT)
+
+calculate_btn = tk.Button(window, text='Start', command=ipmitool,font=fontExample3,padx=5,pady=10)
+calculate_btn.pack()
+
+result_label=tk.Label(window)
+result_label.pack(pady=100,side='left')
+
+
+
+#ipmitool
+#os.system("pause")
+window.mainloop()
