@@ -1,0 +1,50 @@
+'''
+Save log 
+'''
+import os
+
+def arcconf_log():
+    ctrl = input ("Please inpute totoal controller number:")
+    if ctrl =="1":
+        os.system("./arcconf getconfig 1 ad > 1_ad.txt")
+        os.system("./arcconf getconfig 1 al > 1_al.txt")
+
+    if ctrl =="2":
+        os.system("./arcconf getconfig 1 ad > 1_ad.txt")
+        os.system("./arcconf getconfig 1 al > 1_al.txt")
+        os.system("./arcconf getconfig 2 ad > 2_ad.txt")
+        os.system("./arcconf getconfig 2 al > 2_al.txt")
+
+    if ctrl =="3":
+        os.system("./arcconf getconfig 1 ad > 1_ad.txt")
+        os.system("./arcconf getconfig 1 al > 1_al.txt")
+        os.system("./arcconf getconfig 2 ad > 2_ad.txt")
+        os.system("./arcconf getconfig 2 al > 2_al.txt")
+        os.system("./arcconf getconfig 3 ad > 3_ad.txt")
+        os.system("./arcconf getconfig 3 al > 3_al.txt")
+
+         
+    print ("Save log complete")
+
+
+
+def storcli_log():
+    ctrl = input ("Please inpute totoal controller number:")
+    if ctrl =="1":
+        os.system("./storcli64 /call show > call_show.txt")
+        os.system("./storcli64 /call show all > call_show_all.txt")
+    else:
+        os.system("./storcli64 /call show > call_show.txt")
+        os.system("./storcli64 /call show all > call_show_all.txt")
+            
+    print ("Save log complete")
+
+
+if __name__ == "__main__":
+    vendor = input ("Please inpute vendor:")
+    if vendor.lower() == "mc":
+        arcconf_log()
+    elif vendor.lower() == "br":
+        storcli_log()
+    else:
+        print("Please input correct raid vendor!")
