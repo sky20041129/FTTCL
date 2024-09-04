@@ -80,7 +80,7 @@ def remove(file):
         os.remove(file)
 
 # Create base directory for all tests
-BASE_LOGPATH = 'VM_DC_Cycle_log'
+BASE_LOGPATH = 'VM_Reboot_Cycle_log'
 if not os.path.exists(BASE_LOGPATH):
     os.makedirs(BASE_LOGPATH)
 
@@ -98,7 +98,7 @@ touch(FLGFILE)
 LOGFILE = os.path.join(TEST_LOGPATH, 'combined_log.txt')
 
 with open(LOGFILE, 'a') as log:
-    script_name = 'VM_DC'
+    script_name = 'VM_Reboot'
     for CNT in range(1, LOOP + 1):
         if not os.path.exists(FLGFILE):
             break
@@ -106,25 +106,17 @@ with open(LOGFILE, 'a') as log:
         echo_time(script_name, "******* {}/{} start *******".format(CNT, LOOP))
         log_message(script_name, "******* {}/{} start *******".format(CNT, LOOP), log, CNT)
 
-        echo_time(script_name, "******* Shutdown Server *******")
-        log_message(script_name, "******* Shutdown Server *******", log, CNT)
-        success = run_command_with_retries(['python', 'shutdown-all.py'], log, CNT, "Shutdown Server", script_name)
+        echo_time(script_name, "******* Reboot Server *******")
+        log_message(script_name, "******* Reboot Server *******", log, CNT)
+        success = run_command_with_retries(['python', 'reboot-all.py'], log, CNT, "Reboot Server", script_name)
         if not success:
             echo_time(script_name, "Critical failure, stopping test.")
             log_message(script_name, "Critical failure, stopping test.", log, CNT)
             sys.exit(1)
 
-        echo_time(script_name, "******* Sleep while power off *******")
-        log_message(script_name, "******* Sleep while power off *******", log, CNT)
+        echo_time(script_name, "******* Sleep while reboot *******")
+        log_message(script_name, "******* Sleep while reboot *******", log, CNT)
         time.sleep(OFFTIME)
-
-        echo_time(script_name, "******* Power On Server *******")
-        log_message(script_name, "******* Power On Server *******", log, CNT)
-        success = run_command_with_retries(['python', 'power-on-all.py'], log, CNT, "Power On Server", script_name)
-        if not success:
-            echo_time(script_name, "Critical failure, stopping test.")
-            log_message(script_name, "Critical failure, stopping test.", log, CNT)
-            sys.exit(1)
 
         echo_time(script_name, "******* Waiting Power On *******")
         log_message(script_name, "******* Waiting Power On *******", log, CNT)
